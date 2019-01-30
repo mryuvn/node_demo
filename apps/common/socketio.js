@@ -10,6 +10,10 @@ module.exports = function (io) {
     io.sockets.on("connection", function (socket) {
         console.log("Có thằng vừa truy cập! ID = " + socket.id);
 
+        socket.on("GET-USERDATA", data => {
+            socket.emit('EMIT-USERSDATA', USERSDATA);
+        });
+
         //LISTEN ON USER ACTIONS
         socket.on("user-login", data => {
             console.log(data.username + ' vừa đăng nhập ' + socket.id);
