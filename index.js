@@ -19,7 +19,7 @@ app.use(controllers);
 var host = config.get("server.host");
 var port = config.get("server.port");
 var server = app.listen(port, host, function () {
-    console.log("NODE_API: Serve is listening in PORT ", port);
+    console.log("node_demo: Serve is listening in PORT ", port);
     let time = new Date();
     let vnTime = time.toLocaleString('en-US', { timeZone: 'Asia/Ho_Chi_Minh' });
     let today = new Date(vnTime);

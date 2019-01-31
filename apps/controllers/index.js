@@ -9,7 +9,7 @@ router.use("/users", require(__dirname + "/users"));
 router.use("/customers", require(__dirname + "/customers"));
 
 router.get("/", function (req, res) {
-    res.json({"mess": "Welcome to Nodejs Application!"});    
+    res.json({"mess": "<node_demo> Welcome to Nodejs Application!"});    
 });
 
 module.exports = router;
