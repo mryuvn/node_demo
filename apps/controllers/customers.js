@@ -10,7 +10,7 @@ var db_model = require("../models/db_models");
 var data_table = 'vfl_customers';
 
 router.get("/", (req, res) => {
-    res.json({ "mess": "Hi, this is XOO's Customers API!" });
+    res.json({ "mess": "Hi, this is VFL's Customers API!" });
 });
 
 router.get("/get-data", (req, res) => {
