@@ -26,7 +26,7 @@ router.get("/check-login/:username/:login_code/:onStatus/:secur_key", (req, res)
             var setStatus = 'online';
         }
         var where = 'WHERE username = "' + username + '"';
-        db_model.getData(data_tables.users, '*', where, '').then(rs => {
+        db_model.getData(data_tables.users, '*', where, '', '').then(rs => {
             if (rs.length > 0) {
                 var user = rs[0];
                 if (!user.enabled) {
@@ -70,7 +70,7 @@ router.post("/login", jsonParser, (req, res) => {
         var password = req.body.password;
         password = md5(password + username);
         var where = 'WHERE username = "' + username + '"';
-        db_model.getData(data_tables.users, '*', where, '').then(rs => {
+        db_model.getData(data_tables.users, '*', where, '', '').then(rs => {
             if (rs.length > 0) {
                 let user = rs[0];
                 if (!user.enabled) {
@@ -111,7 +111,7 @@ router.post("/unlock", jsonParser, (req, res) => {
         var password = req.body.password;
         password = md5(password + username);
         var where = 'WHERE username = "' + username + '"';
-        db_model.getData(data_tables.users, '*', where, '').then(rs => {
+        db_model.getData(data_tables.users, '*', where, '', '').then(rs => {
             if (rs.length > 0) {
                 let user = rs[0];
                 if (user.password === password) {

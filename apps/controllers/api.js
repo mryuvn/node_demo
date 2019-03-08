@@ -34,7 +34,12 @@ router.get("/get-data", (req, res) => {
                 } else {
                     var orderBy = '';
                 }
-                db_model.getData(db, fields, where, orderBy)
+                if (req.query.limit) {
+                    var limit = req.query.limit;
+                } else {
+                    var limit = '';
+                }
+                db_model.getData(db, fields, where, orderBy, limit)
                     .then(data => {
                         res.json({ "mess": "ok", "data": data });
                     })
@@ -55,6 +60,8 @@ router.get("/get-data", (req, res) => {
         });
     }
 });
+
+
 
 router.post("/add-data", jsonParser, (req, res) => {
     if (req.body) {
@@ -124,7 +131,16 @@ router.post("/add-data", jsonParser, (req, res) => {
                 }).catch(err => res.json({ "mess": "fail", "err": err }));
         } else {
             db_model.addData(data_table, fields)
-                .then(result => res.json({ "mess": "ok", "result": result, "time": time }))
+                .then(result => res.json({
+                    "mess": "ok", 
+                    "result": result, 
+                    "code": fields.code,
+                    "reference": fields.reference,
+                    "year": fields.year,
+                    "month": fields.month,
+                    "date": fields.date,
+                    "createdTime": fields.createdTime 
+                }))
                 .catch(err => res.json({ "mess": "fail", "err": err }));
         }
     } else {
@@ -218,6 +234,59 @@ router.get("/get-currency-data", (req, res) => {
             }
         })
         .catch(err => res.json({ "mess": "fail", "err": err }));
+});
+
+router.get("/get-site-values", (req, res) => {
+    var secur_key = req.query.secur_key;
+    if (secur_key == api_secur.secur) {
+        var db = 'webs_site_value';
+        var fields = '*';
+        var where = req.query.where;
+        var orderBy = '';
+        db_model.getData(db, fields, where, orderBy)
+            .then(data => {
+                if (data.length > 0) {
+                    var values = data[0];
+                    if (values.tels) {
+                        values.telArr = values.tels.split(' | ');
+                    } else {
+                        values.telArr = [];
+                    }
+                    if (values.emails) {
+                        values.emailArr = values.emails.split(' | ');
+                    } else {
+                        values.emailArr = [];
+                    }
+                    if (values.hotlines) {
+                        values.hotlineArr = values.hotlines.split(' | ');
+                    } else {
+                        values.hotlineArr = [];
+                    }
+                    if (values.contacts) {
+                        values.contactArr = [];
+                        const ctArr = values.contacts.split(' | ');
+                        ctArr.forEach(ct => {
+                            const arr = ct.split(':');
+                            if (arr.length > 0) {
+                                values.contactArr.push({
+                                    type: arr[0],
+                                    value: arr[1]
+                                });
+                            }
+                        });
+                    }
+                    res.json({ "mess": "ok", "data": values });
+                } else {
+                    res.json({ "mess": "noData" });
+                }
+    
+            }).catch(err => res.json({ "mess": "fail", "err": err }));
+    } else {
+        res.json({
+            "mess": "fail",
+            "err": "Fail or missing Security key!"
+        });
+    }
 });
 
 module.exports = router;

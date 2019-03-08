@@ -113,7 +113,7 @@ router.get("/get-currencies-data", (req, res) => {
     var fields = '*';
     var where = '';
     var orderBy = '';
-    db_model.getData(db, fields, where, orderBy)
+    db_model.getData(db, fields, where, orderBy, '')
         .then(resData => {
             if (resData == '') {
                 res.json({ "mess": "fail", "err": "dataNotFound" });
