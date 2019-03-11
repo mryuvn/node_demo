@@ -315,7 +315,11 @@ module.exports = function (io) {
 
         //LISTEN ON MESSAGE
         socket.on("message", message => {
-            socket.emit("message", message);
+            let data = {
+                id: socket.id,
+                message: message
+            }
+            io.sockets.emit("message", data); //Emit to all sockets
         });
         //LISTEN ON MESSAGE
 
