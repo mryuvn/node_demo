@@ -339,6 +339,10 @@ module.exports = function (io) {
             socket.broadcast.emit('clear-visitor-chat-attention', data);
         });
 
+        socket.on("member-create-private-room-chat", data => {
+            socket.broadcast.emit("member-create-private-room-chat", data);
+        });
+        
         socket.on("member-chat", data => {
             socket.broadcast.emit("member-chat", data);
         });
