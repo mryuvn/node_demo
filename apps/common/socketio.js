@@ -350,7 +350,7 @@ module.exports = function (io) {
         socket.on("member-chat", data => {
             socket.broadcast.emit("member-chat", data);
         });
-        socket.on("update_visitor_chat_content", data => {
+        socket.on("update_member_chat_content", data => {
             let message = data.message;
             let emit = data.emit;
             let broadcast = data.broadcast;
