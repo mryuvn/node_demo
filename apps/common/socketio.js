@@ -350,6 +350,18 @@ module.exports = function (io) {
         socket.on("member-chat", data => {
             socket.broadcast.emit("member-chat", data);
         });
+        socket.on("update_visitor_chat_content", data => {
+            let message = data.message;
+            let emit = data.emit;
+            let broadcast = data.broadcast;
+            let content = data.content;
+            if (emit) {
+                socket.emit(message, content);
+            }
+            if (broadcast) {
+                socket.broadcast.emit(message, content);
+            }
+        });
         //LISTEN ON CHAT APP
 
         //LISTTEN ON CLIENT DISCONNECT
