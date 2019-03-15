@@ -31,7 +31,7 @@ router.get("/random-string", (req, res) => {
 
     if (req.query.charset) { var charset = req.query.charset; } else { var charset = 'alphanumeric'; }
 
-    if (req.query.capitalization) { var capitalization = req.query.capitalization; } else { var capitalization = 'lowercase'; }
+    if (req.query.capitalization) { var capitalization = req.query.capitalization; } else { var capitalization = null; }
 
     // var string = random.new(number, charset, capitalization);
     var string = func.randomString(number, charset, capitalization);
